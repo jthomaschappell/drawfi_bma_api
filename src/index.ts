@@ -23,12 +23,14 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Health endpoint
+// Health endpoints
 app.get('/health', async (req, res) => {
   try {
     // Test Supabase connection
-    const { data, error } = await supabase.from('_health_check').select('*').limit(1);
-    
+    // const { data, error } = await supabase.from('_health_check').select('*').limit(1);
+    const { data, error } = await supabase.from('profiles').select('*').limit(1);
+
+    console.log(data);
     if (error) {
       throw error;
     }
@@ -45,6 +47,14 @@ app.get('/health', async (req, res) => {
       error: 'Database connection failed'
     });
   }
+});
+
+// Server health endpoint
+app.get('/server-health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Start server
