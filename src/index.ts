@@ -51,9 +51,8 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// ! Works. 
 // Health endpoints
-app.get('/health', async (req, res) => {
+app.get('/database-health', async (req, res) => {
   try {
     // Test Supabase connection
     // const { data, error } = await supabase.from('_health_check').select('*').limit(1);
@@ -78,16 +77,14 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// ! Works. 
 // Server health endpoint
-app.get('/server-health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString()
   });
 });
 
-// ! Works. 
 // Allowed Emails endpoint
 app.get('/allowed-emails', async (req, res) => {
   try {
